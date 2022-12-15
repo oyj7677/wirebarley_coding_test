@@ -2,7 +2,10 @@ package com.example.tordertask.utils
 
 import java.security.DigestException
 import java.security.MessageDigest
+import java.security.Timestamp
 import java.text.DecimalFormat
+import java.text.SimpleDateFormat
+import java.util.*
 
 open class Util {
 
@@ -32,9 +35,14 @@ open class Util {
             return String(hexChars)
         }
 
-        fun addComma(price: Int): String? {
-            val formatter = DecimalFormat("#,###,###")
+        fun addComma(price: Float): String {
+            val formatter = DecimalFormat("#,###,###.##")
             return formatter.format(price)
+        }
+
+        fun timeStampToDate(timestamp: Long) : String {
+            val simpleDateFormat = SimpleDateFormat("yyyy-MM-dd HH:mm", Locale.KOREA)
+            return simpleDateFormat.format(timestamp * 1000L)
         }
     }
 }

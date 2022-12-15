@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -11,9 +10,9 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center"
+        android:text="환율 계산"
         android:textSize="35sp"
-        android:textStyle="bold"
-        android:text="환율 계산"/>
+        android:textStyle="bold" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -25,43 +24,47 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_marginLeft="20dp"
-            android:gravity="right"
             android:layout_weight="3"
-            android:textSize="20sp"
-            android:text="송금국가 : "/>
+            android:gravity="right"
+            android:text="송금국가 : "
+            android:textSize="20sp" />
 
-        <Spinner
-            android:id="@+id/spinner_send_country"
+        <TextView
+            android:id="@+id/tv_send_country"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="7"
+            android:gravity="left"
+            android:spinnerMode="dropdown"
+            android:text="USD"
+            android:textSize="20sp"
+            tools:ignore="RtlHardcoded" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:weightSum="10">
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="20dp"
+            android:layout_weight="3"
+            android:gravity="right"
+            android:text="송취국가 : "
+            android:textSize="20sp"
+            tools:ignore="RtlHardcoded" />
+
+        <TextView
+            android:id="@+id/tv_receive_country"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="7"
             android:spinnerMode="dropdown"
-            android:gravity="left"
-            />
-
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:weightSum="10">
-
-        <TextView
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_marginLeft="20dp"
-            android:gravity="right"
-            android:layout_weight="3"
-            android:textSize="20sp"
-            android:text="송취국가 : "/>
-
-        <Spinner
-            android:id="@+id/spinner_receive_country"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="7"
-            android:spinnerMode="dropdown"/>
+            android:textSize="20sp" />
 
     </LinearLayout>
 
@@ -77,15 +80,15 @@
             android:layout_marginLeft="20dp"
             android:layout_weight="3"
             android:gravity="right"
-            android:textSize="20sp"
-            android:text="환율 : "/>
+            android:text="환율 : "
+            android:textSize="20sp" />
 
         <TextView
             android:id="@+id/tv_exchange_rate"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="7"
-            android:textSize="20sp"/>
+            android:textSize="20sp" />
 
     </LinearLayout>
 
@@ -101,15 +104,15 @@
             android:layout_marginStart="20dp"
             android:layout_weight="3"
             android:gravity="right"
-            android:textSize="20sp"
-            android:text="조회시간 : "/>
+            android:text="조회시간 : "
+            android:textSize="20sp" />
 
         <TextView
-            android:id="@+id/tv_inquiry_time"
+            android:id="@+id/tv_inquiry_date"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="7"
-            android:textSize="20sp"/>
+            android:textSize="20sp" />
 
     </LinearLayout>
 
@@ -125,32 +128,32 @@
             android:layout_marginStart="20dp"
             android:layout_weight="3"
             android:gravity="right"
-            android:textSize="20sp"
-            android:text="송금액 : "/>
+            android:text="송금액 : "
+            android:textSize="20sp" />
 
         <LinearLayout
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:orientation="horizontal"
-            android:layout_weight="7">
+            android:layout_weight="7"
+            android:orientation="horizontal">
 
             <EditText
                 android:id="@+id/ed_send_payment"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
+                android:background="@drawable/ed_corner_rectangle"
                 android:gravity="right"
                 android:inputType="numberDecimal"
                 android:textSize="20sp"
-                android:background="@drawable/ed_corner_rectangle"
                 tools:ignore="NestedWeights" />
 
             <TextView
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="3"
-                android:textSize="20sp"
-                android:text=" USD"/>
+                android:text=" USD"
+                android:textSize="20sp" />
         </LinearLayout>
 
 
@@ -162,8 +165,21 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="30dp"
         android:gravity="center"
-        android:textSize="25sp"
-        android:text="수취금액은 0.00KRW 입니다."/>
+        android:text="수취금액은 0.00KRW 입니다."
+        android:textSize="25sp" />
 
+    <Button
+        android:id="@+id/btn_calculate"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:text="계산하기" />
+
+    <NumberPicker
+        android:id="@+id/picker_receive_country"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity=""
+        android:visibility="visible" />
 
 </LinearLayout>
