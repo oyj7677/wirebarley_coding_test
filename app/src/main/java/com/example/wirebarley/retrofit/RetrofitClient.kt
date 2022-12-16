@@ -1,6 +1,7 @@
 package com.example.wirebarley.retrofit
 
 import com.google.gson.GsonBuilder
+import hu.akarnokd.rxjava3.retrofit.RxJava3CallAdapterFactory
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
 import okhttp3.Response
@@ -21,8 +22,9 @@ object RetrofitClient {
         if (instance == null) {
             instance = Retrofit.Builder()
                 .baseUrl(BASE_URL)
-                .client(okHttpClient(AppInterceptor()))
+                .addCallAdapterFactory(RxJava3CallAdapterFactory.create())
                 .addConverterFactory(GsonConverterFactory.create(gson))
+                .client(okHttpClient(AppInterceptor()))
                 .build()
         }
         return instance!!

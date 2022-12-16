@@ -1,24 +1,31 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     tools:context=".main.MainFragment">
 
     <TextView
+        android:id="@+id/tv_title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/layout_send_country"
         android:text="환율 계산"
         android:textSize="35sp"
         android:textStyle="bold" />
 
     <LinearLayout
+        android:id="@+id/layout_send_country"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:weightSum="10">
+        android:weightSum="10"
+        app:layout_constraintTop_toBottomOf="@+id/tv_title"
+        app:layout_constraintBottom_toTopOf="@+id/layout_recv_country">
 
         <TextView
             android:layout_width="0dp"
@@ -43,10 +50,13 @@
     </LinearLayout>
 
     <LinearLayout
+        android:id="@+id/layout_recv_country"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:weightSum="10">
+        android:weightSum="10"
+        app:layout_constraintTop_toBottomOf="@+id/layout_send_country"
+        app:layout_constraintBottom_toTopOf="@+id/layout_currency_rate">
 
         <TextView
             android:layout_width="0dp"
@@ -69,10 +79,13 @@
     </LinearLayout>
 
     <LinearLayout
+        android:id="@+id/layout_currency_rate"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:weightSum="10">
+        android:weightSum="10"
+        app:layout_constraintTop_toBottomOf="@+id/layout_recv_country"
+        app:layout_constraintBottom_toTopOf="@+id/layout_inquiry">
 
         <TextView
             android:layout_width="0dp"
@@ -93,10 +106,13 @@
     </LinearLayout>
 
     <LinearLayout
+        android:id="@+id/layout_inquiry"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:weightSum="10">
+        android:weightSum="10"
+        app:layout_constraintTop_toBottomOf="@+id/layout_currency_rate"
+        app:layout_constraintBottom_toTopOf="@+id/layout_send_payment">
 
         <TextView
             android:layout_width="0dp"
@@ -117,10 +133,13 @@
     </LinearLayout>
 
     <LinearLayout
+        android:id="@+id/layout_send_payment"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:weightSum="10">
+        android:weightSum="10"
+        app:layout_constraintTop_toBottomOf="@+id/layout_inquiry"
+        app:layout_constraintBottom_toTopOf="@+id/tv_msg_receive_payment">
 
         <TextView
             android:layout_width="0dp"
@@ -144,7 +163,8 @@
                 android:layout_weight="1"
                 android:background="@drawable/ed_corner_rectangle"
                 android:gravity="right"
-                android:inputType="numberDecimal"
+                android:inputType="number"
+                android:maxLength="5"
                 android:textSize="20sp"
                 tools:ignore="NestedWeights" />
 
@@ -165,21 +185,17 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="30dp"
         android:gravity="center"
+        app:layout_constraintTop_toBottomOf="@+id/layout_send_payment"
         android:text="수취금액은 0.00KRW 입니다."
         android:textSize="25sp" />
-
-    <Button
-        android:id="@+id/btn_calculate"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:text="계산하기" />
 
     <NumberPicker
         android:id="@+id/picker_receive_country"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity=""
-        android:visibility="visible" />
+        android:layout_gravity="bottom"
+        android:visibility="visible"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:descendantFocusability="blocksDescendants"/>
 
-</LinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>
