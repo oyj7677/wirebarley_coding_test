@@ -1,7 +1,7 @@
 package com.example.wirebarley.main
 
-import com.example.tordertask.BasePresenter
-import com.example.tordertask.BaseView
+import com.example.wirebarley.BasePresenter
+import com.example.wirebarley.BaseView
 
 interface MainContract {
     interface View : BaseView<Presenter> {
@@ -10,7 +10,7 @@ interface MainContract {
         fun setMsgReceivePayment(payment: String, sendCountry: String)
         fun updateCurrencyData(index: Int)
         fun getSendPayment(): Int
-        fun errDialogAndFinish(title: String, errMsg: String)
+        fun showErrorDialogAndFinish(title: String, errMsg: String)
     }
 
     interface Presenter : BasePresenter {

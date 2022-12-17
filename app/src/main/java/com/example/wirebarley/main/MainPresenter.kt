@@ -2,7 +2,7 @@ package com.example.wirebarley.main
 
 import android.accounts.NetworkErrorException
 import android.content.Context
-import com.example.tordertask.utils.Util
+import com.example.wirebarley.utils.Util
 import com.example.wirebarley.db.CurrencyRateData
 import com.example.wirebarley.db.Currency
 import com.example.wirebarley.db.SendCountry
@@ -112,7 +112,7 @@ class MainPresenter(private val context: Context, private val view: MainFragment
                         "서버에 일시적으로 접근이 불가능 합니다."
                     }
                     else -> {
-                        "에러를 확인해 주세요"
+                        "앱을 재시작해주세요"
                     }
                 }
             }
@@ -121,12 +121,11 @@ class MainPresenter(private val context: Context, private val view: MainFragment
                 errMsg = "앱을 재시작해주세요"
             }
         }
-        view.errDialogAndFinish(title, errMsg)
+        view.showErrorDialogAndFinish(title, errMsg)
     }
 
 
     companion object {
-        private const val TAG = "MainPresenter"
         private const val SEND_COUNTRY = "USD"
         private const val RECEIVE_COUNTRY_LIST = "KRW,JPY,PHP"
     }

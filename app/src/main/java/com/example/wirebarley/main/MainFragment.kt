@@ -2,24 +2,22 @@ package com.example.wirebarley.main
 
 import android.annotation.SuppressLint
 import android.app.AlertDialog
+import android.content.Context
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.inputmethod.InputMethodManager
 import android.widget.EditText
 import android.widget.NumberPicker
 import android.widget.TextView
 import androidx.fragment.app.Fragment
 import com.example.wirebarley.R
 
-class MainFragment : Fragment(), MainContract.View, View.OnClickListener {
 
-    companion object {
-        fun newInstance(): MainFragment = MainFragment()
-        private const val TAG = "SignUpFragment"
-    }
+class MainFragment : Fragment(), MainContract.View, View.OnClickListener {
 
     private lateinit var presenter: MainContract.Presenter
 
@@ -47,17 +45,22 @@ class MainFragment : Fragment(), MainContract.View, View.OnClickListener {
         tvExchangeRate = root.findViewById(R.id.tv_exchange_rate)
         tvMsgReceivePayment = root.findViewById(R.id.tv_msg_receive_payment)
         edSendPayment = root.findViewById(R.id.ed_send_payment)
+        piker = root.findViewById(R.id.picker_receive_country)
+
+        root.findViewById<View>(R.id.tv_receive_country).setOnClickListener(this)
+        root.findViewById<View>(R.id.layout_fragment).setOnClickListener(this)
+
         edSendPayment.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
             }
 
             override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
-               // p0 ->  현재 입력된 문자열
+                // p0 ->  현재 입력된 문자열
                 if(p0.toString().isEmpty()) return
 
                 val sentPayment = p0.toString().toInt()
                 if(sentPayment > 10000) {
-                     edSendPayment.setText("10000")
+                    edSendPayment.setText("10000")
                     // 다이얼 로그
                     AlertDialog.Builder(requireContext())
                         .setTitle("입력 오류")
@@ -78,7 +81,6 @@ class MainFragment : Fragment(), MainContract.View, View.OnClickListener {
 
         })
 
-        piker = root.findViewById(R.id.picker_receive_country)
         piker.minValue = 0
         piker.maxValue = receiveCountryArray.size - 1
         piker.displayedValues = receiveCountryArray
@@ -92,13 +94,28 @@ class MainFragment : Fragment(), MainContract.View, View.OnClickListener {
             } else {
                 edSendPayment.setText(edSendPayment.text.toString())
             }
-
-
         }
-        tvReceiveCountry.text = receiveCountryArray[0]
 
-        root.findViewById<View>(R.id.tv_receive_country).setOnClickListener(this)
+        tvReceiveCountry.text = receiveCountryArray[0]
         return root
+    }
+
+    override fun setPresenter(presenter: MainContract.Presenter) {
+        this.presenter = presenter
+        presenter.start()
+    }
+
+    override fun onClick(view: View) {
+        when(view.id) {
+            R.id.tv_receive_country -> {
+                if(piker.visibility == View.GONE) {
+                    piker.visibility = View.VISIBLE
+                } else if (piker.visibility == View.VISIBLE) {
+                    piker.visibility = View.GONE
+                }
+            }
+            R.id.layout_fragment -> hideKeyboard()
+        }
     }
 
     override fun setInquiryDate(date: String) {
@@ -117,7 +134,7 @@ class MainFragment : Fragment(), MainContract.View, View.OnClickListener {
         return edSendPayment.text.toString().toInt()
     }
 
-    override fun errDialogAndFinish(title: String, errMsg: String) {
+    override fun showErrorDialogAndFinish(title: String, errMsg: String) {
         AlertDialog.Builder(requireContext())
             .setTitle(title)
             .setMessage(errMsg)
@@ -128,31 +145,25 @@ class MainFragment : Fragment(), MainContract.View, View.OnClickListener {
             .show()
     }
 
-    override fun setPresenter(presenter: MainContract.Presenter) {
-        this.presenter = presenter
-        presenter.start()
-    }
-
     override fun updateCurrencyData(index: Int) {
         val currencyRate = presenter.getCurrencyRate(index)
         val sendCountry = presenter.getSendCountry()
         setExchangeRate(currencyRate, sendCountry)
     }
 
-    override fun onClick(view: View) {
-        when(view.id) {
-            R.id.tv_receive_country -> {
-                if(piker.visibility == View.GONE) {
-                    piker.visibility = View.VISIBLE
-                } else if (piker.visibility == View.VISIBLE) {
-                    piker.visibility = View.GONE
-                }
-            }
-        }
-    }
-
     override fun onDestroy() {
         presenter.compositeDisposableClear()
         super.onDestroy()
+    }
+
+    private fun hideKeyboard() {
+        if(activity != null && requireActivity().currentFocus != null) {
+            val inputMethodManager = requireActivity().getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+            inputMethodManager.hideSoftInputFromWindow(requireActivity().currentFocus?.windowToken, InputMethodManager.HIDE_NOT_ALWAYS)
+        }
+    }
+
+    companion object {
+        fun newInstance(): MainFragment = MainFragment()
     }
 }

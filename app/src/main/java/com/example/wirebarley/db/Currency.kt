@@ -21,7 +21,6 @@ data class Quotes(
     val usdKrw : Float,
 
     @SerializedName("USDPHP")
-    val usdPhp : Float,
-
+    val usdPhp : Float
 )
 

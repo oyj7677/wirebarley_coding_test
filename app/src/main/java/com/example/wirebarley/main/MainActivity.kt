@@ -2,7 +2,7 @@ package com.example.wirebarley.main
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import com.example.tordertask.utils.ActivityUtils
+import com.example.wirebarley.utils.ActivityUtils
 import com.example.wirebarley.R
 
 class MainActivity : AppCompatActivity() {
